@@ -1,42 +1,544 @@
-#root {
-  max-width: 1280px;
+/* Менин жалпы стилдерим */
+.app {
+  min-height: 100vh;
+  padding: 20px 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+}
+
+/* Тёмная тема */
+.app.dark {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #ffffff; /* Тексттер ак болот */
+}
+
+/* Светлая тема */
+.app.light {
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  color: #000000; /* Тексттер кара болот */
+}
+
+.container {
+  max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3b5998;
+}
+
+.app.dark .title {
+  color: #8ab4f8; /* Тёмная темада заголовок башка түстө */
+}
+
+.theme-toggle {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.app.light .theme-toggle {
+  color: #000000;
+}
+
+.app.dark .theme-toggle {
+  color: #ffffff;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-input, .form-textarea, .form-button {
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  width: calc(100% - 40px);
+  margin: 0 20px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.app.light .form-input,
+.app.light .form-textarea {
+  color: #000000;
+}
+
+.app.dark .form-input,
+.app.dark .form-textarea {
+  color: #ffffff;
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+  color: #a0a0a0;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: #5a9bd4;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-button {
+  background: linear-gradient(90deg, #4caf50, #388e3c);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form-button:hover {
+  background: linear-gradient(90deg, #388e3c, #2e7d32);
+  transform: translateY(-1px);
+}
+
+.filter {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.app.light .filter-label {
+  color: #000000;
+}
+
+.app.dark .filter-label {
+  color: #ffffff;
+}
+
+.filter-select {
+  padding: 8px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.app.light .filter-select {
+  color: #000000;
+}
+
+.app.dark .filter-select {
+  color: #ffffff;
+}
+
+.filter-select:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-item {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.task-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.task-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.app.light .task-title {
+  color: #000000;
+}
+
+.app.dark .task-title {
+  color: #ffffff;
+}
+
+.task-arrow {
+  font-size: 1rem;
+}
+
+.app.light .task-arrow {
+  color: #000000;
+}
+
+.app.dark .task-arrow {
+  color: #ffffff;
+}
+
+.task-arrow.open {
+  transform: rotate(180deg);
+}
+
+.task-details {
+  display: none;
+  padding-top: 8px;
+}
+
+.task-details.open {
+  display: block;
+}
+
+.task-description, .task-deadline {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.app.light .task-description,
+.app.light .task-deadline {
+  color: #000000;
+}
+
+.app.dark .task-description,
+.app.dark .task-deadline {
+  color: #ffffff;
+}
+
+.status-select {
+  padding: 8px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.app.light .status-select {
+  color: #000000;
+}
+
+.app.dark .status-select {
+  color: #ffffff;
+}
+
+.task-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.task-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.task-button.edit {
+  background: linear-gradient(90deg, #2196f3, #1976d2);
+}
+
+.task-button.edit:hover {
+  background: linear-gradient(90deg, #1976d2, #1565c0);
+}
+
+.task-button.delete {
+  background: linear-gradient(90deg, #f44336, #d32f2f);
+}
+
+.task-button.delete:hover {
+  background: linear-gradient(90deg, #d32f2f, #b71c1c);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.edit-button.save {
+  background: linear-gradient(90deg, #4caf50, #388e3c);
+}
+
+.edit-button.save:hover {
+  background: linear-gradient(90deg, #388e3c, #2e7d32);
+}
+
+.edit-button.cancel {
+  background: linear-gradient(90deg, #f44336, #d32f2f);
+}
+
+.edit-button.cancel:hover {
+  background: linear-gradient(90deg, #d32f2f, #b71c1c);
+}
+
+.no-tasks {
   text-align: center;
+  font-size: 1rem;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app.light .no-tasks {
+  color: #000000;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.app.dark .no-tasks {
+  color: #ffffff;
+}
+
+.error-boundary {
+  text-align: center;
+  padding: 30px;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+.app.light .error-boundary {
+  color: #f44336;
+}
+
+.app.dark .error-boundary {
+  color: #ef5350;
+}
+
+/* Телефон экрандары үчүн адаптивдүүлүк (320px чейин) */
+@media (max-width: 480px) {
+  .app {
+    padding: 10px 5px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .container {
+    padding: 10px;
+    margin: 0 5px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .theme-toggle {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .task-form {
+    gap: 8px;
+  }
+
+  .form-input, .form-textarea, .form-button {
+    width: calc(100% - 20px);
+    margin: 0 10px;
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .form-textarea {
+    min-height: 60px;
+  }
+
+  .form-button {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .filter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .filter-label {
+    font-size: 0.9rem;
+  }
+
+  .filter-select {
+    width: calc(100% - 20px);
+    margin: 0 10px;
+    padding: 6px;
+    font-size: 0.9rem;
+  }
+
+  .task-list {
+    gap: 8px;
+  }
+
+  .task-item {
+    padding: 10px;
+  }
+
+  .task-title {
+    font-size: 1rem;
+  }
+
+  .task-arrow {
+    font-size: 0.9rem;
+  }
+
+  .task-description, .task-deadline {
+    font-size: 0.85rem;
+  }
+
+  .status-select {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  .task-buttons {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .task-button {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+
+  .edit-form {
+    gap: 8px;
+  }
+
+  .edit-buttons {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .edit-button {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+
+  .no-tasks {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .error-boundary {
+    padding: 20px;
+    font-size: 1rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Орто экрандар (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .app {
+    padding: 15px 8px;
+  }
+
+  .container {
+    padding: 15px;
+    margin: 0 8px;
+  }
+
+  .header {
+    flex-direction: row;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .theme-toggle {
+    width: auto;
+  }
+
+  .form-input, .form-textarea, .form-button {
+    width: calc(100% - 30px);
+    margin: 0 15px;
+    padding: 10px;
+  }
+
+  .filter {
+    flex-direction: row;
+  }
+
+  .filter-select {
+    width: auto;
+    margin: 0;
+  }
+
+  .task-buttons, .edit-buttons {
+    flex-direction: row;
+  }
+
+  .task-button, .edit-button {
+    width: auto;
   }
 }
 
-.card {
-  padding: 2em;
-}
+/* Планшет жана чоң экрандар (768px жана андан жогору) */
+@media (min-width: 768px) {
+  .app {
+    padding: 20px 10px;
+  }
 
-.read-the-docs {
-  color: #888;
+  .container {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
 }
