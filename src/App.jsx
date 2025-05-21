@@ -3,62 +3,39 @@ import './App.css';
 import TaskFrom from './components/TaskFrom';
 import TaskList from './components/TaskLIst';
 import ErrorBoundary from './components/ErrorBoundary';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState('all');
   const [theme, setTheme] = useState('light');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    console.log("Проверяю localStorage");
-    const savedTasks = localStorage.getItem('tasks');
-    if (savedTasks) {
-      try {
-        const parsedTasks = JSON.parse(savedTasks);
-        console.log("Получил задачи:", parsedTasks);
-        if (Array.isArray(parsedTasks)) {
-          setTasks(parsedTasks);
-          console.log("Задачи загружены");
-        } else {
-          console.log("Не массив, ставлю пустой");
-          setTasks([]);
-        }
-      } catch (error) {
-        console.log("Ошибка при загрузке:", error);
-        setTasks([]);
-      }
-    } else {
-      console.log("Ничего нет в localStorage");
-      setTasks([]);
-    }
+    const stored = localStorage.getItem("tasks");
+    if (stored) setTasks(JSON.parse(stored));
   }, []);
 
   useEffect(() => {
-    console.log("Сохраняю задачи:", tasks);
-    try {
-      localStorage.setItem('tasks', JSON.stringify(tasks));
-      console.log("Сохранено");
-    } catch (error) {
-      console.log("Ошибка сохранения:", error);
-      alert("Не могу сохранить задачи, проверь память браузера!");
-    }
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const addTask = (task) => {
-    if (!task || !task.title || task.title.trim() === '') {
+  const addTask = (taskData) => {
+    if (!taskData.title || taskData.title.trim() === '') {
       alert("Напишите название задачи!");
       return;
     }
     const newTask = {
-      title: task.title.trim(),
-      description: task.description ? task.description.trim() : '',
-      deadline: task.deadline || '',
+      title: taskData.title.trim(),
+      description: taskData.description ? taskData.description.trim() : '',
+      deadline: taskData.deadline || '',
       id: Date.now(),
       status: 'new',
     };
     console.log("Добавляю задачу:", newTask);
     setTasks([...tasks, newTask]);
     console.log("Список теперь:", tasks);
+    setSearchTerm('');
   };
 
   const deleteTask = (id) => {
@@ -97,8 +74,14 @@ function App() {
 
   const filteredTasks = Array.isArray(tasks)
     ? tasks.filter((task) => {
-        if (filter === 'all') return true;
-        return task.status === filter;
+        const title = task.title?.toLowerCase() || '';
+        const search = searchTerm.toLowerCase();
+        const matchSearch = title.includes(search);
+
+        const matchFilter =
+          filter === 'all' ? true : task.status === filter;
+
+        return matchSearch && matchFilter;
       })
     : [];
   console.log("Фильтрованные задачи:", filteredTasks);
@@ -110,10 +93,19 @@ function App() {
           <header className="header">
             <h1 className="title">Мои задачи</h1>
             <button onClick={changeTheme} className="theme-toggle">
-              {theme === 'light' ? '🌙 Тёмная' : '☀️ Светлая'}
+              {theme === 'light' ? (
+                <MdDarkMode size={24} style={{ color: '#666' }} />
+              ) : (
+                <MdLightMode size={24} style={{ color: '#ccc' }} />
+              )}
             </button>
           </header>
-          <TaskFrom addTask={addTask} theme={theme} />
+          <TaskFrom
+            addTask={addTask}
+            theme={theme}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          />
           <div className="filter">
             <label className="filter-label">Фильтр:</label>
             <select onChange={(e) => setFilter(e.target.value)} className="filter-select">

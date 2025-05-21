@@ -1,4 +1,3 @@
-/* Менин жалпы стилдерим */
 .app {
   min-height: 100vh;
   padding: 20px 10px;
@@ -7,16 +6,14 @@
   background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
 }
 
-/* Тёмная тема */
 .app.dark {
   background: linear-gradient(135deg, #1a1a2e, #16213e);
-  color: #ffffff; /* Тексттер ак болот */
+  color: #ffffff;
 }
 
-/* Светлая тема */
 .app.light {
   background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
-  color: #000000; /* Тексттер кара болот */
+  color: #000000;
 }
 
 .container {
@@ -43,7 +40,7 @@
 }
 
 .app.dark .title {
-  color: #8ab4f8; /* Тёмная темада заголовок башка түстө */
+  color: #8ab4f8;
 }
 
 .theme-toggle {
@@ -66,6 +63,41 @@
 .theme-toggle:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
+}
+
+.search-container {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  width: calc(100% - 40px);
+  margin: 0 20px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.app.light .search-input {
+  color: #000000;
+}
+
+.app.dark .search-input {
+  color: #ffffff;
+}
+
+.search-input::placeholder {
+  color: #a0a0a0;
+}
+
+.search-input:focus {
+  border-color: #5a9bd4;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .task-form {
@@ -354,7 +386,6 @@
   color: #ef5350;
 }
 
-/* Телефон экрандары үчүн адаптивдүүлүк (320px чейин) */
 @media (max-width: 480px) {
   .app {
     padding: 10px 5px;
@@ -386,7 +417,7 @@
     gap: 8px;
   }
 
-  .form-input, .form-textarea, .form-button {
+  .form-input, .form-textarea, .form-button, .search-input {
     width: calc(100% - 20px);
     margin: 0 10px;
     padding: 8px;
@@ -400,6 +431,16 @@
   .form-button {
     padding: 8px;
     font-size: 0.9rem;
+  }
+
+  .search-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .search-input {
+    width: calc(100% - 20px);
+    margin: 0 10px;
   }
 
   .filter {
@@ -481,7 +522,6 @@
   }
 }
 
-/* Орто экрандар (481px - 767px) */
 @media (min-width: 481px) and (max-width: 767px) {
   .app {
     padding: 15px 8px;
@@ -504,7 +544,7 @@
     width: auto;
   }
 
-  .form-input, .form-textarea, .form-button {
+  .form-input, .form-textarea, .form-button, .search-input {
     width: calc(100% - 30px);
     margin: 0 15px;
     padding: 10px;
@@ -528,7 +568,6 @@
   }
 }
 
-/* Планшет жана чоң экрандар (768px жана андан жогору) */
 @media (min-width: 768px) {
   .app {
     padding: 20px 10px;
