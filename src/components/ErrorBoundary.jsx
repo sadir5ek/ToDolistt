@@ -1,6 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundaryInner extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
@@ -16,10 +17,16 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      return <h2>Что-то пошло не так.</h2>;
+      return <h2>{this.props.t('errors.somethingWentWrong')}</h2>;
     }
     return this.props.children;
   }
+}
+
+// Обертка для использования useTranslation с class component
+function ErrorBoundary(props) {
+  const { t } = useTranslation();
+  return <ErrorBoundaryInner {...props} t={t} />;
 }
 
 export default ErrorBoundary;

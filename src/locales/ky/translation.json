@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "менин тапшырмам",
+    "filter": "Статус боюнча чыпкалоо"
+  },
+  "filter": {
+    "all": "Баары",
+    "new": "Жаңы",
+    "inProgress": "Иш жүрүп жатат",
+    "completed": "Аяктаган"
+  },
+  "buttons": {
+    "clearAll": "Бардык тапшырмаларды тазалоо",
+    "edit": "Түзөтүү",
+    "delete": "Өчүрүү",
+    "save": "Сактоо",
+    "cancel": "Жокко чыгаруу"
+  },
+  "alerts": {
+    "writeTitle": "Тапшырманын атын жазыңыз!",
+    "titleCannotBeEmpty": "Тапшырманын аты бош болбошу керек!",
+    "allTasksCleared": "Бардык тапшырмалар өчүрүлдү!"
+  },
+  "taskForm": {
+    "titlePlaceholder": "Тапшырманын аты",
+    "descriptionPlaceholder": "Тапшырманын сүрөттөлүшү",
+    "addButton": "Тапшырма кошуу"
+  },
+  "taskList": {
+  "noTasks": "Азырынча тапшырмалар жок."
+},
+"errors": {
+  "somethingWentWrong": "Бир нерсе туура эмес болуп калды."
+}
+
+
+}

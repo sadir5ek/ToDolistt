@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function TaskItem({ task, deleteTask, updateTask, toggleStatus, theme }) {
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +13,7 @@ function TaskItem({ task, deleteTask, updateTask, toggleStatus, theme }) {
 
   const handleSave = () => {
     if (!editedTask.title.trim()) {
-      alert('Введите название задачи!');
+      alert(t('alerts.titleCannotBeEmpty'));
       return;
     }
     updateTask(editedTask);
@@ -50,10 +52,10 @@ function TaskItem({ task, deleteTask, updateTask, toggleStatus, theme }) {
           />
           <div className="edit-buttons">
             <button onClick={handleSave} className="edit-button save">
-              Сохранить
+              {t('buttons.save')}
             </button>
             <button onClick={() => setIsEditing(false)} className="edit-button cancel">
-              Отмена
+              {t('buttons.cancel')}
             </button>
           </div>
         </div>
@@ -76,17 +78,17 @@ function TaskItem({ task, deleteTask, updateTask, toggleStatus, theme }) {
                 onChange={(e) => toggleStatus(task.id, e.target.value)}
                 className="status-select"
               >
-                <option value="new">Новые</option>
-                <option value="in-progress">В процессе</option>
-                <option value="completed">Завершённые</option>
+                <option value="new">{t('filter.new')}</option>
+                <option value="in-progress">{t('filter.inProgress')}</option>
+                <option value="completed">{t('filter.completed')}</option>
               </select>
             </div>
             <div className="task-buttons">
               <button onClick={() => setIsEditing(true)} className="task-button edit">
-                Редактировать
+                {t('buttons.edit')}
               </button>
               <button onClick={() => deleteTask(task.id)} className="task-button delete">
-                Удалить
+                {t('buttons.delete')}
               </button>
             </div>
           </div>

@@ -4,12 +4,18 @@ import TaskFrom from './components/TaskFrom';
 import TaskList from './components/TaskLIst';
 import ErrorBoundary from './components/ErrorBoundary';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
+import ruFlag from './assets/flagsru.png';
+import enFlag from './assets/flagsen.png';
+import kyFlag from './assets/flagskgz.png';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState('all');
   const [theme, setTheme] = useState('light');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false); // Кошулду
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const stored = localStorage.getItem("tasks");
@@ -22,9 +28,10 @@ function App() {
 
   const addTask = (taskData) => {
     if (!taskData.title || taskData.title.trim() === '') {
-      alert("Напишите название задачи!");
+      alert(t("alerts.writeTitle"));
       return;
     }
+
     const newTask = {
       title: taskData.title.trim(),
       description: taskData.description ? taskData.description.trim() : '',
@@ -32,92 +39,168 @@ function App() {
       id: Date.now(),
       status: 'new',
     };
-    console.log("Добавляю задачу:", newTask);
     setTasks([...tasks, newTask]);
-    console.log("Список теперь:", tasks);
     setSearchTerm('');
   };
 
   const deleteTask = (id) => {
-    console.log("Удаляю задачу с ID:", id);
     setTasks(tasks.filter((task) => task.id !== id));
-    console.log("Остался список:", tasks);
   };
 
   const updateTask = (updatedTask) => {
     if (!updatedTask.title || updatedTask.title.trim() === '') {
-      alert("Название задачи не может быть пустым!");
+      alert(t("alerts.titleCannotBeEmpty"));
       return;
     }
-    console.log("Обновляю задачу:", updatedTask);
     setTasks(tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
-    console.log("Обновлённый список:", tasks);
   };
 
   const toggleStatus = (id, status) => {
-    console.log("Меняю статус для ID:", id, "на:", status);
     setTasks(tasks.map((task) => (task.id === id ? { ...task, status } : task)));
-    console.log("Статус изменён");
   };
 
   const changeTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
-    console.log("Тема теперь:", theme === 'light' ? 'dark' : 'light');
   };
 
   const clearAllTasks = () => {
     setTasks([]);
     localStorage.removeItem('tasks');
-    console.log("Все задачи удалены");
-    alert("Все задачи очищены!");
+    alert(t("alerts.allTasksCleared"));
   };
 
-  const filteredTasks = Array.isArray(tasks)
-    ? tasks.filter((task) => {
-        const title = task.title?.toLowerCase() || '';
-        const search = searchTerm.toLowerCase();
-        const matchSearch = title.includes(search);
+  const getFlagImage = (lang) => {
+    switch (lang) {
+      case 'ru': return ruFlag;
+      case 'en': return enFlag;
+      case 'ky': return kyFlag;
+      default: return enFlag;
+    }
+  };
 
-        const matchFilter =
-          filter === 'all' ? true : task.status === filter;
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    setShowDropdown(false);
+  };
 
-        return matchSearch && matchFilter;
-      })
-    : [];
-  console.log("Фильтрованные задачи:", filteredTasks);
+  const filteredTasks = tasks.filter((task) => {
+    const title = task.title?.toLowerCase() || '';
+    const search = searchTerm.toLowerCase();
+    const matchSearch = title.includes(search);
+    const matchFilter = filter === 'all' ? true : task.status === filter;
+    return matchSearch && matchFilter;
+  });
 
   return (
     <ErrorBoundary>
       <div className={`app ${theme}`}>
         <div className="container">
           <header className="header">
-            <h1 className="title">Мои задачи</h1>
-            <button onClick={changeTheme} className="theme-toggle">
-              {theme === 'light' ? (
-                <MdDarkMode size={24} style={{ color: '#666' }} />
-              ) : (
-                <MdLightMode size={24} style={{ color: '#ccc' }} />
-              )}
-            </button>
+            <h1 className="title">{t("app.title")}</h1>
+            <div className="controls" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+  <button
+    onClick={changeTheme}
+    style={{
+      width: 40,
+      height: 30,
+      borderRadius: 6,
+      border: '1px solid #666',
+      backgroundColor: theme === 'light' ? '#f0f0f0' : '#2e2e2e',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      padding: 0,
+    }}
+  >
+    {theme === 'light' ? (
+      <MdDarkMode size={18} style={{ color: '#666' }} />
+    ) : (
+      <MdLightMode size={18} style={{ color: '#ccc' }} />
+    )}
+  </button>
+
+  <div className="custom-select" style={{ position: 'relative' }}>
+    <div
+      onClick={() => setShowDropdown(!showDropdown)}
+      style={{
+        width: 40,
+        height: 30,
+        borderRadius: 6,
+        border: '1px solid #666',
+        backgroundColor: theme === 'light' ? '#f0f0f0' : '#2e2e2e',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+      }}
+    >
+      <img
+        src={getFlagImage(i18n.language)}
+        alt={i18n.language}
+        style={{ width: 40, height: 30, borderRadius: 5 }}
+      />
+    </div>
+
+    {showDropdown && (
+      <div
+        className="options"
+        style={{
+          position: 'absolute',
+          top: '110%',
+          left: 0,
+          backgroundColor: theme === 'light' ? '#fff' : '#2e2e2e',
+          border: '1px solid #ccc',
+          borderRadius: 5,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+          zIndex: 10,
+        }}
+      >
+        <div
+          onClick={() => changeLanguage('ru')}
+          style={{ padding: '5px 10px', display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+        >
+          <img src={ruFlag} alt="Русский" style={{ width: 25, height: 18, borderRadius: 3 }} />
+        </div>
+        <div
+          onClick={() => changeLanguage('en')}
+          style={{ padding: '5px 10px', display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+        >
+          <img src={enFlag} alt="English" style={{ width: 25, height: 18, borderRadius: 3 }} />
+        </div>
+        <div
+          onClick={() => changeLanguage('ky')}
+          style={{ padding: '5px 10px', display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}
+        >
+          <img src={kyFlag} alt="Кыргызча" style={{ width: 25, height: 18, borderRadius: 3 }} />
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+
           </header>
+
           <TaskFrom
             addTask={addTask}
             theme={theme}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
           />
+
           <div className="filter">
-            <label className="filter-label">Фильтр:</label>
+            <label className="filter-label">{t("app.filter")}:</label>
             <select onChange={(e) => setFilter(e.target.value)} className="filter-select">
-              <option value="all">Все</option>
-              <option value="new">Новые</option>
-              <option value="in-progress">В процессе</option>
-              <option value="completed">Завершённые</option>
+              <option value="all">{t("filter.all")}</option>
+              <option value="new">{t("filter.new")}</option>
+              <option value="in-progress">{t("filter.inProgress")}</option>
+              <option value="completed">{t("filter.completed")}</option>
             </select>
             <button onClick={clearAllTasks} className="task-button delete">
-              Очистить всё
+              {t("buttons.clearAll")}
             </button>
           </div>
+
           <TaskList
             tasks={filteredTasks}
             deleteTask={deleteTask}

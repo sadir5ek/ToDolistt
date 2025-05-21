@@ -1,3 +1,4 @@
+
 .app {
   min-height: 100vh;
   padding: 20px 10px;
@@ -60,10 +61,7 @@
   color: #ffffff;
 }
 
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-1px);
-}
+
 
 .search-container {
   margin-bottom: 20px;

@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "Мои задачи",
+    "filter": "Фильтр по статусу"
+  },
+  "filter": {
+    "all": "Все",
+    "new": "Новые",
+    "inProgress": "В процессе",
+    "completed": "Завершённые"
+  },
+  "buttons": {
+    "clearAll": "Удалить все задачи",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "save": "Сохранить",
+    "cancel": "Отмена"
+  },
+  "alerts": {
+    "writeTitle": "Пожалуйста, введите название задачи!",
+    "titleCannotBeEmpty": "Название задачи не может быть пустым!",
+    "allTasksCleared": "Все задачи были удалены!"
+  },
+  "taskForm": {
+    "titlePlaceholder": "Название задачи",
+    "descriptionPlaceholder": "Описание задачи",
+    "addButton": "Добавить задачу"
+  },
+  "taskList": {
+  "noTasks": "Задач пока нет."
+},
+"errors": {
+  "somethingWentWrong": "Что-то пошло не так."
+}
+
+
+}

@@ -1,70 +1,16 @@
-// import React, { useState } from 'react';
-
-// function TaskFrom({ addTask, theme, searchTerm, setSearchTerm }) {
-//   const [description, setDescription] = useState('');
-//   const [deadline, setDeadline] = useState('');
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log('Form submitted, title:', searchTerm.trim());
-//     if (!searchTerm.trim()) {
-//       alert('Введите название задачи!');
-//       return;
-//     }
-//     const task = {
-//       title: searchTerm.trim(),
-//       description: description.trim(),
-//       deadline: deadline || '',
-//     };
-//     console.log('Submitting task:', task);
-//     addTask(task);
-//     setDescription('');
-//     setDeadline('');
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit} className="task-form">
-//       <input
-//         type="text"
-//         placeholder="Название задачи " 
-//         value={searchTerm}
-//         onChange={(e) => setSearchTerm(e.target.value)}
-//         className="form-input"
-//       />
-//       <textarea
-//         placeholder="Описание задачи"
-//         value={description}
-//         onChange={(e) => setDescription(e.target.value)}
-//         className="form-textarea"
-//         rows="5"
-//       />
-//       <input
-//         type="date"
-//         value={deadline}
-//         onChange={(e) => setDeadline(e.target.value)}
-//         className="form-input"
-//       />
-//       <button type="submit" className="form-button" disabled={!searchTerm.trim()}>
-//         Добавить задачу
-//       </button>
-//     </form>
-//   );
-// }
-
-// export default TaskFrom;
-
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
-function TaskFrom({ addTask, theme, searchTerm, setSearchTerm }) {
+function TaskForm({ addTask, theme, searchTerm, setSearchTerm }) {
+  const { t } = useTranslation();
   const [description, setDescription] = useState('');
   const [deadline, setDeadline] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted, title:', searchTerm.trim());
     if (!searchTerm.trim()) {
-      alert('Введите название задачи!');
+      alert(t('alerts.writeTitle'));
       return;
     }
     const task = {
@@ -72,7 +18,6 @@ function TaskFrom({ addTask, theme, searchTerm, setSearchTerm }) {
       description: description.trim(),
       deadline: deadline || '',
     };
-    console.log('Submitting task:', task);
     addTask(task);
     setDescription('');
     setDeadline('');
@@ -83,11 +28,11 @@ function TaskFrom({ addTask, theme, searchTerm, setSearchTerm }) {
       <div style={{ position: 'relative', width: '100%' }}>
         <input
           type="text"
-          placeholder="Название задачи"
+          placeholder={t('taskForm.titlePlaceholder')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="form-input"
-          style={{ paddingRight: '30px' }} 
+          style={{ paddingRight: '30px' }}
         />
         <FaSearch
           style={{
@@ -100,7 +45,7 @@ function TaskFrom({ addTask, theme, searchTerm, setSearchTerm }) {
         />
       </div>
       <textarea
-        placeholder="Описание задачи"
+        placeholder={t('taskForm.descriptionPlaceholder')}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         className="form-textarea"
@@ -113,10 +58,10 @@ function TaskFrom({ addTask, theme, searchTerm, setSearchTerm }) {
         className="form-input"
       />
       <button type="submit" className="form-button" disabled={!searchTerm.trim()}>
-        Добавить задачу
+        {t('taskForm.addButton')}
       </button>
     </form>
   );
 }
 
-export default TaskFrom;
+export default TaskForm;

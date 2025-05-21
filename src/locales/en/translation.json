@@ -1,0 +1,37 @@
+{
+  "app": {
+    "title": "To Do List",
+    "filter": "Filter by status"
+  },
+  "filter": {
+    "all": "All",
+    "new": "New",
+    "inProgress": "In Progress",
+    "completed": "Completed"
+  },
+  "buttons": {
+    "clearAll": "Clear all tasks",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "alerts": {
+    "writeTitle": "Please enter a task title!",
+    "titleCannotBeEmpty": "Task title cannot be empty!",
+    "allTasksCleared": "All tasks have been deleted!"
+  },
+  "taskForm": {
+    "titlePlaceholder": "Task title",
+    "descriptionPlaceholder": "Task description",
+    "addButton": "Add task"
+  },
+  "taskList": {
+  "noTasks": "No tasks yet."
+},
+"errors": {
+  "somethingWentWrong": "Something went wrong."
+}
+
+
+}

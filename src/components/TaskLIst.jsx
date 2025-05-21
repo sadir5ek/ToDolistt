@@ -1,8 +1,9 @@
 import React from 'react';
 import TaskItem from './TaskItem';
+import { useTranslation } from 'react-i18next';
 
 function TaskList({ tasks, deleteTask, updateTask, toggleStatus, theme }) {
-  console.log('TaskList received tasks:', tasks);
+  const { t } = useTranslation();
   const validTasks = (Array.isArray(tasks) ? tasks : []).filter(
     (task) => task && typeof task === 'object' && task.id
   );
@@ -10,7 +11,7 @@ function TaskList({ tasks, deleteTask, updateTask, toggleStatus, theme }) {
   return (
     <div className="task-list">
       {validTasks.length === 0 ? (
-        <p className="no-tasks">Нет задач</p>
+        <p className="no-tasks">{t('taskList.noTasks')}</p>
       ) : (
         validTasks.map((task) => (
           <TaskItem
@@ -28,6 +29,3 @@ function TaskList({ tasks, deleteTask, updateTask, toggleStatus, theme }) {
 }
 
 export default TaskList;
-
-
-
