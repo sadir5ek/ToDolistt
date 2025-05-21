@@ -19,7 +19,7 @@
   "alerts": {
     "writeTitle": "Please enter a task title!",
     "titleCannotBeEmpty": "Task title cannot be empty!",
-    "allTasksCleared": "All tasks have been deleted!"
+    "allTasksCleared": "All tasks have been cleared!"
   },
   "taskForm": {
     "titlePlaceholder": "Task title",
@@ -27,11 +27,16 @@
     "addButton": "Add task"
   },
   "taskList": {
-  "noTasks": "No tasks yet."
-},
-"errors": {
-  "somethingWentWrong": "Something went wrong."
-}
-
-
+    "noTasks": "No tasks yet."
+  },
+  "errors": {
+    "somethingWentWrong": "Something went wrong."
+  },
+  "calendar": {
+    "months": [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ],
+    "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  }
 }

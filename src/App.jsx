@@ -14,7 +14,7 @@ function App() {
   const [filter, setFilter] = useState('all');
   const [theme, setTheme] = useState('light');
   const [searchTerm, setSearchTerm] = useState('');
-  const [showDropdown, setShowDropdown] = useState(false); // Кошулду
+  const [showDropdown, setShowDropdown] = useState(false); 
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -193,7 +193,7 @@ function App() {
             <select onChange={(e) => setFilter(e.target.value)} className="filter-select">
               <option value="all">{t("filter.all")}</option>
               <option value="new">{t("filter.new")}</option>
-              <option value="in-progress">{t("filter.inProgress")}</option>
+              <option value="inProgress">{t("filter.inProgress")}</option>
               <option value="completed">{t("filter.completed")}</option>
             </select>
             <button onClick={clearAllTasks} className="task-button delete">
